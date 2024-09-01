@@ -1,5 +1,6 @@
 "use client";
 
+import Card from "@/components/Card";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -13,20 +14,18 @@ function page({ searchParams }) {
       .get(
         `https://api.themoviedb.org/3/movie/${
           genre === "TopRated" ? `top_rated` : `popular`
-        }?api_key=${API_KEY}&language=en-US&page=1`
+        }?api_key=${API_KEY}&language=en-US&page=1`,
+        { next: { revaidate: 10 } }
       )
       .then((res) => setMyList(res.data.results))
       .catch((err) => console.log("something wrong:", err));
-
   }, [genre, API_KEY]);
-  console.log(mylist)
 
   return (
-    <div>
-      {mylist.map((item, i) => (
-        <h1 key={i}> {item.title} </h1>
-      ))}
-    </div>
+    <>
+      {/* <h1>{mylist.title}</h1> */}
+      <Card result={mylist} />
+    </>
   );
 }
 
